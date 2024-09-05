@@ -1,0 +1,48 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+/* CSS Resets */
+body,
+ul {
+  margin: unset;
+  padding: unset;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+/* Components */
+:root {
+  font-size: 62.5%;
+  font-family: Pretendard;
+  text-align: center;
+}
+
+body {
+  background-color: darkslategray;
+}
+
+.l_wrapper {
+  box-shadow: inset 0 0 20px red;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header-title {
+  font-size: 5rem;
+  color: whitesmoke;
+}
+
+.project-list {
+  text-align: center;
+  font-size: 2.3rem;
+  color: lightcyan;
+  text-decoration: underline;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
