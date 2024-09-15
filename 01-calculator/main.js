@@ -2,36 +2,49 @@
 
 // DOM node 객체 얻기
 let resultNode = document.querySelector(".result");
-let leftParentNode = document.querySelector(".left-parent");
-let rightParentNode = document.querySelector(".right-parent");
-let percentNode = document.querySelector(".percent");
-let acNode = document.querySelector(".ac");
-let divideNode = document.querySelector(".divide");
-let timesNode = document.querySelector(".times");
-let minusNode = document.querySelector(".minus");
-let plusNode = document.querySelector(".plus");
-let dotNode = document.querySelector(".dot");
-let oneNode = document.querySelector(".one");
-let twoNode = document.querySelector(".two");
-let threeNode = document.querySelector(".three");
-let fourNode = document.querySelector(".four");
-let fiveNode = document.querySelector(".five");
-let sixNode = document.querySelector(".six");
-let sevenNode = document.querySelector(".seven");
-let eightNode = document.querySelector(".eight");
-let nineNode = document.querySelector(".nine");
-let zeroNode = document.querySelector(".zero");
+
+// 배열의 구조분해 할당을 통한 숫자 DOM Node 획득.
+const [oneNode, twoNode, threeNode, fourNode, fiveNode, sixNode, sevenNode, eightNode, nineNode, zeroNode] = [
+  document.querySelector(".one"),
+  document.querySelector(".two"),
+  document.querySelector(".three"),
+  document.querySelector(".four"),
+  document.querySelector(".five"),
+  document.querySelector(".six"),
+  document.querySelector(".seven"),
+  document.querySelector(".eight"),
+  document.querySelector(".nine"),
+  document.querySelector(".zero"),
+];
+
+// 배열의 구조분해 할당을 통한 기호 DOM Node 획득
+const [leftParentNode, rightParentNode, percentNode, acNode, divideNode, timesNode, minusNode, plusNode, dotNode, equalNode] = [
+  document.querySelector(".left-parent"),
+  document.querySelector(".right-parent"),
+  document.querySelector(".percent"),
+  document.querySelector(".ac"),
+  document.querySelector(".divide"),
+  document.querySelector(".times"),
+  document.querySelector(".minus"),
+  document.querySelector(".plus"),
+  document.querySelector(".dot"),
+  document.querySelector(".equal"),
+];
 
 // 숫자, 연산자를 계산대에 올려주는 함수
 const getInnerHtml = (e) => {
   resultNode.innerHTML += e.target.innerHTML;
-  console.log(e.target.innerHTML);
 };
 
 const getNum = (e) => {
   resultNode.innerHTML += e.target.innerHTML;
-  console.log(parseInt(e.target.innerHTML));
 };
+
+// 올려진 식을 계산해주는 함수
+equalNode.addEventListener("click", () => {
+  let result = resultNode.innerHTML;
+  resultNode.innerHTML = parseInt(result);
+});
 
 // 계산대를 리셋해주는 함수
 acNode.addEventListener("click", () => {
