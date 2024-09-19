@@ -2,6 +2,8 @@
 
 // DOM node 객체 얻기
 let resultNode = document.querySelector(".result");
+let errorMsg = document.querySelector(".errorMSG");
+
 /*
   아래 상태 관리 변수는 여러 함수에서 참조되어야 하기에 전역변수로 선언하였다.
   (1) 결과가 출력되었다면(즉, equalNdoe가 클릭되었다면, true로 바꿈)
@@ -41,6 +43,7 @@ const [leftParentNode, rightParentNode, percentNode, acNode, divideNode, timesNo
 
 // 사칙 연산자, %을 계산대에 올려주는 함수
 const getOperator = (e) => {
+  errorMsg.innerHTML = "";
   let regExp = /\d/; // 정규 표현식 : 숫자를 포함하는지
   // 만약 계산대의 수식에 숫자가 포함되어 있다면
 
@@ -60,15 +63,12 @@ const getOperator = (e) => {
   }
 };
 
-// 처음에 나와도 되는 괄호, . 연산자를 계산대에 올려주는 함수
-const getInnerHtml = (e) => {
-  resultNode.innerHTML += e.target.innerHTML;
-};
-
 // 숫자를 계산대에 올려놓는 함수
 const getNum = (e) => {
+  errorMsg.innerHTML = "";
   // 결과 출력 상태관리 변수에 따라 숫자를 눌렀을 때 실행되는 코드가 다름.
   // 결과가 출력이 되었다면
+
   if (isResultDisplayed) {
     // 숫자 버튼을 누를 때 아래 코드들 실행
     resultNode.innerHTML = ""; // 결과창을 빈창으로 바꾸고
@@ -83,13 +83,18 @@ equalNode.addEventListener("click", () => {
   isResultDisplayed = true;
   console.log(isResultDisplayed);
   if (resultNode.innerHTML !== "") {
-    resultNode.innerHTML = math.evaluate(resultNode.innerHTML);
+    try {
+      resultNode.innerHTML = math.evaluate(resultNode.innerHTML);
+    } catch (error) {
+      resultNode.innerHTML = "";
+      errorMsg.innerHTML = "계산될 수 없는 수식입니다. 다시 입력해주세요.";
+    }
   }
 });
 
 // AC 버튼을 누르면 계산대를 리셋해주는 함수
 acNode.addEventListener("click", () => {
-  resultNode.innerHTML = "";
+  resultNode.innerHTML = 0;
 });
 
 // 여러 DOM 요소에 같은 이벤트 리스너를 추가하기 위해 숫자와 연산자 버튼에 대한 이벤트 리스너를 설정하는 함수를 정의해주었다.
@@ -104,29 +109,8 @@ const addEventListener = (nodes, handler) => {
 // 숫자 버튼과 연산자 버튼의 DOM 노드를 각각 배열로 묶어서 관리한다.
 // 숫자 버튼과 연산자 버튼을 나눈 이유는, 두 개의 역할이 다르기 때문
 const numberNodes = [oneNode, twoNode, threeNode, fourNode, fiveNode, sixNode, sevenNode, eightNode, nineNode, zeroNode];
-const operatorNodes = [percentNode, divideNode, timesNode, minusNode, plusNode];
-const bracketNodes = [leftParentNode, rightParentNode, dotNode];
+const operatorNodes = [percentNode, divideNode, timesNode, minusNode, plusNode, leftParentNode, rightParentNode, dotNode];
 
 // 앞서 정의한 addEventListener 함수를 이용하여, 각각의 숫자버튼과 연산자 버튼에 이벤트 리스너를 추가한다.
 addEventListener(numberNodes, getNum);
 addEventListener(operatorNodes, getOperator);
-addEventListener(bracketNodes, getInnerHtml);
-
-// leftParentNode.addEventListener("click", getInnerHtml);
-// rightParentNode.addEventListener("click", getInnerHtml);
-// percentNode.addEventListener("click", getOperator);
-// divideNode.addEventListener("click", getOperator);
-// timesNode.addEventListener("click", getOperator);
-// minusNode.addEventListener("click", getOperator);
-// plusNode.addEventListener("click", getOperator);
-// dotNode.addEventListener("click", getInnerHtml);
-// oneNode.addEventListener("click", getNum);
-// twoNode.addEventListener("click", getNum);
-// threeNode.addEventListener("click", getNum);
-// fourNode.addEventListener("click", getNum);
-// fiveNode.addEventListener("click", getNum);
-// sixNode.addEventListener("click", getNum);
-// sevenNode.addEventListener("click", getNum);
-// eightNode.addEventListener("click", getNum);
-// nineNode.addEventListener("click", getNum);
-// zeroNode.addEventListener("click", getNum);
