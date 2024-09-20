@@ -2,6 +2,7 @@
 
 // 어디서나 사용해야 하는 노드들은 전역에 선언
 let resultNode = document.querySelector(".result");
+let msg = document.querySelector(".errorMSG");
 
 // 계산기의 결과값이 출력되었는지에 대한 상태관리 변수 선언
 let isResultDisplayed = false; // 기본값 : false(출력 안 됨)
@@ -34,6 +35,7 @@ const [zeroNode, oneNode, twoNode, threeNode, fourNode, fiveNode, sixNode, seven
 const getValue = function (e) {
   let value = e.target.value;
   if (isResultDisplayed) {
+    msg.innerHTML = "";
     resultNode.innerHTML = value;
     isResultDisplayed = false;
   } else {
@@ -58,6 +60,7 @@ const getOperator = function (e) {
   (2) 연산자 다음에 바로 올라가지 못한다. (o)
   */
   if (/\d/.test(result) || !operators.includes(result.slice(-1))) {
+    msg.innerHTML = "";
     resultNode.innerHTML += operator;
     isResultDisplayed = false;
   }
@@ -75,13 +78,29 @@ acNode.addEventListener("click", () => {
   isResultDisplayed = true;
 });
 
+// try...catch 구문으로 에러가 발생했을 때의 로직을 구현해보자.
+const isExpValid = function (expression) {
+  try {
+    return math.evaluate(expression);
+  } catch (error) {
+    console.log(error);
+    return "Error";
+  }
+};
+
 // 계산대에 올라간 수식을 계산해 주는 함수
 equalNode.addEventListener("click", () => {
-  let result = resultNode.innerHTML;
-  if (result.trim().length !== 0) {
-    resultNode.innerHTML = math.evaluate(resultNode.innerHTML);
+  if (resultNode.innerHTML.trim().length !== 0) {
+    const result = isExpValid(resultNode.innerHTML);
+    if (result !== "Error") {
+      resultNode.innerHTML = result;
+    } else {
+      resultNode.innerHTML = "";
+      msg.innerHTML = "올바르지 않은 수식입니다.";
+    }
+    isResultDisplayed = true;
+    console.log(isResultDisplayed);
   }
-  isResultDisplayed = true;
   console.log(isResultDisplayed);
 });
 
