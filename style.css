@@ -27,7 +27,6 @@ body {
 }
 
 .l_wrapper {
-  box-shadow: inset 0 0 20px red;
   max-width: 800px;
   margin: 0 auto;
 }
