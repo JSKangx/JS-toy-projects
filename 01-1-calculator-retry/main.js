@@ -7,7 +7,7 @@ let resultNode = document.querySelector(".result");
 let isResultDisplayed = false; // 기본값 : false(출력 안 됨)
 
 // 배열 구조분해 할당을 통한 DOM 노드 획득
-const [zeroNode, oneNode, twoNode, threeNode, fourNode, fiveNode, sixNode, sevenNode, eightNode, nineNode] = [
+const [zeroNode, oneNode, twoNode, threeNode, fourNode, fiveNode, sixNode, sevenNode, eightNode, nineNode, leftBracketNode, rightBracketNode, percentNode, acNode, divideNode, timesNode, minusNode, dotNode, equalNode, plusNode] = [
   document.querySelector(".zero"),
   document.querySelector(".one"),
   document.querySelector(".two"),
@@ -18,9 +18,6 @@ const [zeroNode, oneNode, twoNode, threeNode, fourNode, fiveNode, sixNode, seven
   document.querySelector(".seven"),
   document.querySelector(".eight"),
   document.querySelector(".nine"),
-];
-
-const [leftBracketNode, rightBracketNode, percentNode, acNode, divideNode, timesNode, minusNode, dotNode, equalNode, plusNode] = [
   document.querySelector(".left-bracket"),
   document.querySelector(".right-bracket"),
   document.querySelector(".percent"),
@@ -33,11 +30,11 @@ const [leftBracketNode, rightBracketNode, percentNode, acNode, divideNode, times
   document.querySelector(".plus"),
 ];
 
-// 숫자, 연산자 둘 다 얻어 계산대에 올리고, 상태관리 함수를 false로 변경하는 공통 작업을 하는 핸들링 함수
-const btnHandler = function (e) {};
+// 이벤트 리스너 등록
 
 // 숫자를 얻어 계산대에 올리는 함수
 const getNum = function (e) {
+  console.log(e.target.value);
   /*
   숫자가 계산대에 올라갈 때는
   (1) 결과가 출력된 바로 다음이라면 결과값을 초기화 하고 새로운 수식 시작
@@ -48,6 +45,8 @@ const getNum = function (e) {
 
 // 연산자를 얻어 계산대에 올리는 함수
 const getOperator = function (e) {
+  console.log(e.target.value);
+
   /*
   연산자가 계산대에 올라가는 조건
   (1) 숫자 없이 먼저 올라가지 못한다.
@@ -60,24 +59,27 @@ const getOperator = function (e) {
 };
 
 // 괄호를 얻어 계산대에 올리는 함수
-const getBracket = function (e) {};
+const getBracket = function (e) {
+  console.log(e.target.value);
+};
 
 // 계산대를 리셋해주는 함수
 acNode.addEventListener("click", () => {});
 // 계산대에 올라간 수식을 계산해 주는 함수
 equalNode.addEventListener("click", () => {});
 
-// 버튼의 innerHTML을 얻는 공통 작업을 하는 handler 함수 정의
-const addEventListenertoNodes = (nodes, handler) => {
-  nodes.forEach((node) => node.addEventListener("click", handler));
-};
-
 // 숫자 노드와 연산자 노드를 배열에 모아 놓음
 const numNodes = [zeroNode, oneNode, twoNode, threeNode, fourNode, fiveNode, sixNode, sevenNode, eightNode, nineNode];
 const operatorNodes = [percentNode, divideNode, timesNode, minusNode, dotNode, plusNode];
 const bracketNodes = [leftBracketNode, rightBracketNode];
 
-// numNodes와 operatorNodes 배열의 각 요소에 대해 이벤트리스너 적용
-addEventListenertoNodes(numNodes, getNum());
-addEventListenertoNodes(operatorNodes, getOperator());
-addEventListenertoNodes(operatorNodes, getBracket());
+// 노드 배열의 모든 원소에 대해 다음 함수 실행
+const addEventListenertoNodes = (nodes, handler) => {
+  nodes.forEach((node) => node.addEventListener("click", handler));
+};
+
+// numNodes와 operatorNodes 배열의 각 요소에 대해 이벤트리스너 등록
+// 함수를 바로 실행해 버려서는 안 되고, 이벤트가 발생하는 순간 실행되도록 함수명만 넣어줘야 한다.
+addEventListenertoNodes(numNodes, getNum);
+addEventListenertoNodes(operatorNodes, getOperator);
+addEventListenertoNodes(bracketNodes, getBracket);
