@@ -59,12 +59,11 @@ const getOperator = function (e) {
   (1) 숫자 없이 먼저 올라가지 못한다. (o)
   (2) 연산자 다음에 바로 올라가지 못한다. (o)
   */
-  if (/\d/.test(result) || !operators.includes(result.slice(-1))) {
+  if (/\d/.test(result) && !operators.includes(result.slice(-1))) {
     msg.innerHTML = "";
     resultNode.innerHTML += operator;
     isResultDisplayed = false;
   }
-
   /*
   연산자가 계산대에 올라갈 때
   (1) 결과가 출력된 상태든 아니든, 계산대에 올려져 있는 수식을 이어받아 계산 (o)
@@ -99,9 +98,7 @@ equalNode.addEventListener("click", () => {
       msg.innerHTML = "올바르지 않은 수식입니다.";
     }
     isResultDisplayed = true;
-    console.log(isResultDisplayed);
   }
-  console.log(isResultDisplayed);
 });
 
 // 숫자 노드와 연산자 노드를 배열에 모아 놓음
