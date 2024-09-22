@@ -17,8 +17,6 @@ const startGame = function () {
     myAnswer = "보";
   }
 
-  console.log(`컴퓨터: ${myAnswer}`);
-  console.log(`유저: ${userAnswer}`);
   // 게임 시작 버튼노드에 접근하여 변수에 할당.
   let buttonNode = document.querySelector(".btn-start");
 
