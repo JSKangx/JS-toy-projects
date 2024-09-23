@@ -29,4 +29,7 @@ li {
   text-align: left;
   box-shadow: inset 0 0 20px orange;
   padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
