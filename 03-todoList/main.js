@@ -8,7 +8,6 @@ myForm.addEventListener("submit", function (e) {
   // 유저의 입력값에 접근하기
   let inputNode = document.getElementById("input");
   let newTodo = inputNode.value;
-  console.log(newTodo);
   // 폼 제출 후 input 칸 공백으로 초기화
   inputNode.value = "";
 
@@ -16,8 +15,12 @@ myForm.addEventListener("submit", function (e) {
   let createList = document.createElement("li");
   // 생성된 li 태그에 유저의 입력 추가.
   createList.innerHTML = `<input type="checkbox" /> ${newTodo}`;
-  console.log(createList);
 
   // 생성된 li를 ul에 출력
   list.insertBefore(createList, list.childNodes[0]);
+
+  // 클릭하면 할 일 목록에서 지워주는 이벤트 리스너
+  createList.addEventListener("click", function () {
+    list.removeChild(this);
+  });
 });
