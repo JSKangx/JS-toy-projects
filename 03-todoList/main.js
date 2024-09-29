@@ -37,6 +37,17 @@ myForm.addEventListener("submit", function (e) {
     // 이게 실행되지 않는데도, 자꾸 크기가 늘어남..
   }
 
+  // chechbox에 체크가 될 때, 리스트의 색깔을 바꾸는 함수.
+  checkboxNode.addEventListener("change", function () {
+    if (this.checked) {
+      // newTodo.style.color = "gray";
+      // newTodo.style.textDecoration = "line-through";
+    } else {
+      this.parentNode.style.color = "unset";
+      this.parentNode.style.textDecoration = "unset";
+    }
+  });
+
   // 생성된 li를 ul에 출력
   list.insertBefore(createList, list.childNodes[0]);
 
