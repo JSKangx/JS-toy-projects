@@ -39,3 +39,17 @@ li {
   flex-direction: column;
   gap: 5px;
 }
+
+.todo {
+  display: flex;
+  align-items: center;
+  margin: 3px 0;
+}
+
+.checkbox {
+  margin-right: 10px;
+}
+
+.deleteBtn {
+  margin-left: 10px;
+}

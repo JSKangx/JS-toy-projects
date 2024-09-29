@@ -2,6 +2,7 @@
 
 let myForm = document.getElementById("myForm");
 let list = document.getElementById("list");
+let resetBtn = document.getElementById("reset");
 
 myForm.addEventListener("submit", function (e) {
   e.preventDefault(); // 새로고침 방지
@@ -14,14 +15,17 @@ myForm.addEventListener("submit", function (e) {
   // input을 만들고 checkbox 속성을 지정
   let checkboxNode = document.createElement("input");
   checkboxNode.setAttribute("type", "checkbox");
+  checkboxNode.setAttribute("class", "checkbox");
 
   // 제거 버튼 만들기
   let deleteButton = document.createElement("button");
+  deleteButton.setAttribute("class", "deleteBtn");
   let deleteText = document.createTextNode("X");
   deleteButton.appendChild(deleteText);
 
   // 폼을 제출할 때마다 li 태그 생성
   let createList = document.createElement("li");
+  createList.setAttribute("class", "todo");
   // 생성된 li 태그에
   if (newTodo.data.trim().length !== 0) {
     // (1) 유저의 입력 추가.
@@ -43,4 +47,8 @@ myForm.addEventListener("submit", function (e) {
   deleteButton.addEventListener("click", function () {
     list.removeChild(this.parentNode);
   });
+});
+
+resetBtn.addEventListener("click", () => {
+  list.innerHTML = "";
 });
