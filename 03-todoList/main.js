@@ -4,62 +4,83 @@ let myForm = document.getElementById("myForm");
 let list = document.getElementById("list");
 let resetBtn = document.getElementById("reset");
 
+// 할 일 삭제 처리
+resetBtn.addEventListener("click", () => {
+  list.innerHTML = "";
+});
+
+// 체크박스 생성
+function createCheckbox() {
+  let checkbox = document.createElement("input");
+  checkbox.setAttribute("type", "checkbox");
+  checkbox.setAttribute("class", "checkbox");
+
+  checkbox.addEventListener("change", () => {
+    handleCheckboxChange(checkbox);
+  });
+
+  return checkbox;
+}
+
+// 할 일 텍스트 생성
+function createTodoText(text) {
+  let span = document.createElement("span");
+  span.innerHTML = text;
+
+  return span;
+}
+
+// 삭제 버튼 생성
+function createDeleteButton() {
+  let deleteButton = document.createElement("button");
+  deleteButton.setAttribute("class", "deleteBtn");
+  deleteButton.innerHTML = "X";
+
+  deleteButton.addEventListener("click", () => {
+    list.removeChild(deleteButton.parentNode);
+  });
+
+  return deleteButton;
+}
+
+// 새로운 todo 항목 생성
+function createTodoItem(value) {
+  let todo = document.createElement("li");
+
+  let checkboxNode = createCheckbox();
+  let todoTextNode = createTodoText(value);
+  let deleteButtonNode = createDeleteButton();
+
+  // 리스트 아이템에 체크박스, 텍스트, 삭제버튼 추가
+  todo.appendChild(checkboxNode);
+  todo.appendChild(todoTextNode);
+  todo.appendChild(deleteButtonNode);
+
+  return todo;
+}
+
 myForm.addEventListener("submit", function (e) {
   e.preventDefault(); // 새로고침 방지
   // 유저의 입력값에 접근하기
   let inputNode = document.getElementById("input");
 
-  let newTodo = document.createElement("span");
-  let todoTxt = document.createTextNode(inputNode.value);
-  newTodo.appendChild(todoTxt);
-
-  // input을 만들고 checkbox 속성을 지정
-  let checkboxNode = document.createElement("input");
-  checkboxNode.setAttribute("type", "checkbox");
-  checkboxNode.setAttribute("class", "checkbox");
-
-  // 제거 버튼 만들기
-  let deleteButton = document.createElement("button");
-  deleteButton.setAttribute("class", "deleteBtn");
-  let deleteText = document.createTextNode("X");
-  deleteButton.appendChild(deleteText);
-
-  // 폼을 제출할 때마다 li 태그 생성
-  let createList = document.createElement("li");
-  createList.setAttribute("class", "todo");
   // input에 입력된 것이 있을 때만
-  if (inputNode.value) {
-    // (1) 유저의 입력 추가.
-    createList.appendChild(newTodo);
-    // (2) 체크박스 인풋 추가.
-    createList.insertBefore(checkboxNode, createList.childNodes[0]);
-    // (3) 제거 버튼 추가
-    createList.appendChild(deleteButton);
+  if (inputNode.value.trim()) {
+    let newTodoItem = createTodoItem(inputNode.value);
     // 생성된 li를 ul에 출력
-    list.insertBefore(createList, list.childNodes[0]);
-    // 이게 실행되지 않는데도, 자꾸 크기가 늘어남..
+    list.insertBefore(newTodoItem, list.childNodes[0]);
+    inputNode.value = "";
   }
-
-  // chechbox에 체크가 될 때, 리스트의 색깔을 바꾸는 함수.
-  checkboxNode.addEventListener("change", function () {
-    if (this.checked) {
-      newTodo.style.color = "gray";
-      newTodo.style.textDecoration = "line-through";
-    } else {
-      newTodo.style.color = "unset";
-      newTodo.style.textDecoration = "unset";
-    }
-  });
-
-  // 폼 제출 후 input 칸 공백으로 초기화
-  inputNode.value = "";
-
-  // 클릭하면 할 일 목록에서 지워주는 이벤트 리스너
-  deleteButton.addEventListener("click", function () {
-    list.removeChild(this.parentNode);
-  });
 });
 
-resetBtn.addEventListener("click", () => {
-  list.innerHTML = "";
-});
+// 체크박스 상태 변경 처리
+function handleCheckboxChange(checkbox) {
+  let todoTextNode = checkbox.nextSibling;
+  if (checkbox.checked) {
+    todoTextNode.style.color = "rgba(0, 0, 0, 0.2)";
+    todoTextNode.style.textDecoration = "line-through";
+  } else {
+    todoTextNode.style.color = "unset";
+    todoTextNode.style.textDecoration = "unset";
+  }
+}
