@@ -8,10 +8,11 @@ myForm.addEventListener("submit", function (e) {
   e.preventDefault(); // 새로고침 방지
   // 유저의 입력값에 접근하기
   let inputNode = document.getElementById("input");
-  // 유저의 입력값을 '텍스트 노드'로 만들어 변수에 할당.
-  // 이게 텍스트 노드여야지만 appendChild의 인수가 될 수 있다.
-  let newTodo = document.createTextNode(inputNode.value);
-  // console.log(newTodo.data);
+
+  let newTodo = document.createElement("span");
+  let todoTxt = document.createTextNode(inputNode.value);
+  newTodo.appendChild(todoTxt);
+
   // input을 만들고 checkbox 속성을 지정
   let checkboxNode = document.createElement("input");
   checkboxNode.setAttribute("type", "checkbox");
@@ -42,11 +43,11 @@ myForm.addEventListener("submit", function (e) {
   // chechbox에 체크가 될 때, 리스트의 색깔을 바꾸는 함수.
   checkboxNode.addEventListener("change", function () {
     if (this.checked) {
-      // newTodo.style.color = "gray";
-      // newTodo.style.textDecoration = "line-through";
+      newTodo.style.color = "gray";
+      newTodo.style.textDecoration = "line-through";
     } else {
-      this.parentNode.style.color = "unset";
-      this.parentNode.style.textDecoration = "unset";
+      newTodo.style.color = "unset";
+      newTodo.style.textDecoration = "unset";
     }
   });
 
